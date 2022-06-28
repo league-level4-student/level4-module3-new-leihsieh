@@ -31,7 +31,24 @@ public class LinkedListDemo {
          * String nodes.
          * 
          */
-
+    	LinkedList<String> list = new LinkedList<String>();
+    	list.add("first node");
+    	list.add("second node");
+    	list.add("third node");
+    	list.add("fourth node");
+    	list.add("fifth node");
+    	list.print();
+    	Node<String> head = list.getHead();
+    	LinkedList<String> newList = new LinkedList<String>();
+    	
+    	while(head.getNext()!=null) {
+    		head = list.getHead();
+    		head.setValue(head.getValue().toUpperCase());
+    		newList.add(head.getValue());
+    		head.setNext(list.getHead().getNext());
+    		list.setHead(head.getNext());
+    	}
+    	newList.print();
     }
 
 }
