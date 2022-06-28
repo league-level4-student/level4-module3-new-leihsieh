@@ -100,20 +100,28 @@ public class RainbowZombieCongaLine {
 	 */
 	public void youAreDone(Zombie dancer) {
 		ZombieHatColor hatColor = dancer.getZombieHatColor();
-		LinkedList<Zombie> tempList = new LinkedList<Zombie>();
-		while(congaLine.getHead().getNext()!=null) {
-			if(congaLine.getHead().getValue().getZombieHatColor() != hatColor) {
-				tempList.add(congaLine.getHead().getValue());
+		LinkedList<Zombie> temp = new LinkedList<Zombie>();
+		Node<Zombie> congaHead = congaLine.getHead();
+		int counter = 0;
+		while(congaHead!=null) {
+			if(congaHead.getValue().getZombieHatColor() != hatColor) {
+				temp.add(congaHead.getValue());
 			}
-			else {
-				break;
+			else if(congaHead.getValue().getZombieHatColor() == hatColor && counter==0) {
+				counter++;
 			}
-			congaLine.setHead(congaLine.getHead().getNext());
+			else if(counter == 1) {
+				temp.add(congaHead.getValue());
+			}
+			else {}
+			congaHead = congaHead.getNext();
+			congaLine.remove(0);
 		}
-		congaLine.remove(0);
-		for(int i = 1; i < tempList.size()+1; i++) {
-			jumpInTheLine(tempList.getHead().getValue(),i);
-			tempList.remove(0);
+		Node<Zombie> tempHead = temp.getHead();
+		while(tempHead!=null) {
+			congaLine.add(tempHead.getValue());
+			tempHead=tempHead.getNext();
+			temp.remove(0);
 		}
 	}
 
@@ -122,10 +130,9 @@ public class RainbowZombieCongaLine {
 	 * one to the front, one to the end and one in the middle.
 	 */
 	public void brains(Zombie dancer) {
-		ZombieHatColor hatColor = dancer.getZombieHatColor();
-		jumpInTheLine(new Zombie(hatColor), 0);
-		jumpInTheLine(new Zombie(hatColor), congaLine.size()/2);
-		congaLine.add(new Zombie(hatColor));
+		jumpInTheLine(dancer, 1);
+		congaLine.add(dancer);
+		jumpInTheLine(dancer, congaLine.size()/2);
 	}
 
 	/*
@@ -135,23 +142,22 @@ public class RainbowZombieCongaLine {
 	public void rainbowBrains(Zombie dancer) {
 		LinkedList<Zombie> temp = new LinkedList<Zombie>();
 		temp.add(dancer);
-		System.out.println("\nfirst temp: ");
-		temp.print();
-		for(int i = 0; i < congaLine.size(); i++) {
-			temp.add(congaLine.getHead().getValue());
-			congaLine.setHead(congaLine.getHead().getNext());
+		Node<Zombie> congaHead = congaLine.getHead();
+		while(congaHead!=null) {
+			temp.add(congaHead.getValue());
+			congaHead = congaHead.getNext();
+			congaLine.remove(0);
 		}
-		System.out.println("\nsecond temp:");
-		temp.print();
 		ZombieHatColor[] hatColors = ZombieHatColor.values();
 		for(ZombieHatColor hatColor : hatColors) {
 			temp.add(new Zombie(hatColor));
 		}
-		System.out.println("\nthird temp:");
-		temp.print();
-		for(int i = 0; i < temp.size(); i++) {
-			congaLine.add(temp.getHead().getValue());
-			temp.setHead(temp.getHead().getNext());
+		
+		Node<Zombie> tempHead = temp.getHead();
+		while(tempHead!=null) {
+			congaLine.add(tempHead.getValue());
+			tempHead=tempHead.getNext();
+			temp.remove(0);
 		}
 	}
 
