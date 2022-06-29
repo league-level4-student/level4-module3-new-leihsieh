@@ -33,6 +33,18 @@ public class BinaryTreeDemo {
      */
 
     public static void main(String[] args) {
+    	BinaryTree<Integer> bt = new BinaryTree<Integer>();
+    	bt.insert(6);
+    	bt.insert(4);
+    	bt.insert(2);
+    	bt.insert(3);
+    	bt.insert(5);
+    	bt.printHorizontal();
+    	bt.printVertical();
+    	bt.search(5);
+    	Node<Integer> root = bt.getRoot();
+    	bt.recursiveDelete(root, 4);
+    	bt.printVertical();
     	
     }
 
